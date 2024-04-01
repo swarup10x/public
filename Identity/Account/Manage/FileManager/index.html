@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Manager - CollegeCuber</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <script src="https://kit.fontawesome.com/d42e95d25d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light titleBlue border-bottom box-shadow mb-3">
+            <div class="container">
+                <a id="aLogo" class="navbar-brand" href="/">CollegeCuber</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    
+
+<ul class="navbar-nav">
+    <li class="nav-item ">
+        <a id="manage" class="nav-link text-light" title="Manage" href="/Identity/Account/Manage/FileManager"><i class="fas fa-user"></i></a>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" class="form-inline" action="/Identity/Account/Logout?returnUrl=%2F" method="post">
+            <button id="logout" type="submit" class="nav-link btn btn-link text-light">Logout</button>
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8IgtAQauWkVEqa8K9eLk73NyXZ4XXRKuvTh1TXCs1fAwXfWCKULoTsyB5qds_e6nsNZcB85oqtJECR4z7dzu0ns9OPSVuLRTtOf7ocrM5Yui_d8soEmWuClAv1NVOAwBdQH_n77axaL2uokyLjp4P82Xnn7FooHaLRBGuUs-LmHKsdEXdJVoZJo9Wr7hGkO2Ig" /></form>
+    </li>
+</ul>
+
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="/">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="/Instructions">Instructions</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="/Crop">Crop</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="/Adjust">Adjust</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="/Paint">Paint</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-light" href="/CubeLayout">Cube Layout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<h2>Manage your account</h2>
+
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            
+<link href="/css/Manage.css?version=&amp;v=5SOcrEq8OqWoRhKUyEabmbrtoK_VbqFqwZbGB7LeSfo" rel="stylesheet" />
+
+<ul class="nav nav-pills flex-column">
+
+    <li class="nav-item"><a class="nav-link" id="profile" href="/Identity/Account/Manage">Profile</a></li>
+    <li class="nav-item"><a class="nav-link" id="email" href="/Identity/Account/Manage/Email">Email</a></li>
+    <li class="nav-item"><a class="nav-link" id="change-password" href="/Identity/Account/Manage/ChangePasswordRequest">Password</a></li>
+
+    <li class="nav-item active"><a class="nav-link" id="personal-data" href="/Identity/Account/Manage/FileManager">File Manager</a></li>
+
+
+</ul>
+
+        </div>
+        <div class="col-md-9">
+            
+
+
+
+
+<div class="alert alert-secondary mt-1" role="alert">
+    <h6>Disk Space Useage: <span id="disk-size">0.0</span> / 50 MB </h6>
+    <div class="progress">
+        <div class="progress-bar bg-success" role="progressbar" style="width:97.4%">
+            Free Space
+        </div>
+        <div class="progress-bar bg-danger" role="progressbar" style="width:2.6%">
+            Used Space
+        </div>
+    </div>
+</div>
+
+
+<div class="card-columns" id="project-cards">
+            
+            
+</div>
+
+<form method="post" action="/Identity/Account/Manage/FileManager?handler=RenameProject">
+    <div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="renameModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Project Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="textRenameProject" class="form-control" name="newProjectName" value="" />
+                    <input type="hidden" id="hiddenDirectoryOfProject" name="directoryOfProject" value="" />
+                    <input type="hidden" id="hiddenOldProjectName" name="oldProjectName" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-dark">Rename Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<input name="__RequestVerificationToken" type="hidden" value="CfDJ8IgtAQauWkVEqa8K9eLk73NyXZ4XXRKuvTh1TXCs1fAwXfWCKULoTsyB5qds_e6nsNZcB85oqtJECR4z7dzu0ns9OPSVuLRTtOf7ocrM5Yui_d8soEmWuClAv1NVOAwBdQH_n77axaL2uokyLjp4P82Xnn7FooHaLRBGuUs-LmHKsdEXdJVoZJo9Wr7hGkO2Ig" /></form>
+
+<script>
+    function setRenameValues(folder, directoryOfProject) {
+        textRenameProject.value = folder;
+        hiddenDirectoryOfProject.value = directoryOfProject;
+        hiddenOldProjectName.value = folder;
+    }
+</script>
+
+        </div>
+    </div>
+</div>
+
+
+        </main>
+    </div>
+
+    <footer class="border-top footer text-light">
+        <div class="container d-sm-inline-flex flex-sm-row-reverse">
+            <div>
+                <a href="https://www.instagram.com/CollegeCuber/" class="text-light" target="_blank"><i class="fab fa-instagram fa-3x mt-0 mb-0 align-middle"></i></a>
+            </div>
+            <div class="mr-2">
+                <a href="https://www.facebook.com/CollegeCuber/" class="text-light" target="_blank"><i class="fab fa-facebook fa-3x mt-0 mb-0 align-middle"></i></a>
+            </div>
+            <ul class="navbar-nav flex-grow-1">
+                <li>&copy; 2020 - CollegeCuber - <a class="text-light" href="/Privacy">Privacy</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!--wait Spinner Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="spinnerModal">
+        <div class="modal-dialog modal-dialog-centered text-center" role="document">
+            <div class="modal-body">
+                <div class="spinner-border text-light" role="status" style="width: 100px; height: 100px;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- info Modal -->
+    <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalInfoTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalInfoBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+    <script src="/js/site.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+
+<script>
+async function handleProjectOpen(event, projectid) {
+    event.preventDefault();
+    const user = getUserCookie()
+
+    // Get form data
+
+
+    console.log(`projectid: ${projectid}`);
+
+    clearSessionStorage()
+    sessionStorage.setItem('openedProject', projectid)
+
+    console.log('settingup session cache')
+
+
+    await imageUrltoDataUrl(`/${user['_id']}/${projectid}/Crop.png`, 'Crop')
+    await imageUrltoDataUrl(`/${user['_id']}/${projectid}/Adjust.png`, 'Adjust')
+    await imageUrltoDataUrl(`/${user['_id']}/${projectid}/Paint.png`, 'Paint')
+    
+    fetch(`/${user['_id']}/${projectid}/data.json`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.sliderColorValues) {
+                sessionStorage.setItem('sliderColorValues', JSON.stringify(data.sliderColorValues))
+            }
+            if (data.colors) {
+                sessionStorage.setItem('colors', JSON.stringify(data.colors))
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        window.location.replace('/Paint');
+
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
+    const user = getUserCookie()
+    console.log('Filemanger, dom contentloaded')
+    //fetch from '/Identity/Account'
+    try {
+
+        let response = await fetch('/Identity/Account/Projects')
+        let data = await response.json()
+        var cardElement = document.getElementById('project-cards')
+        var diskSizeElement = document.getElementById('disk-size')
+        diskSizeElement.innerText = data.disksize
+        document.querySelector('.bg-success').style.width = `${100 - data.disksize * 2}%`
+        document.querySelector('.bg-danger').style.width = `${data.disksize * 2}%`
+
+        data.projects.forEach(project => {
+            cardElement.innerHTML = cardElement.innerHTML + makeProjectCard(user['_id'], project.id, project.lastModified, project.size, project.name)
+        });
+    } catch (error) {
+        console.error(error)
+    }
+
+}, false);
+
+
+async function imageUrltoDataUrl(imageUrl, titleKey) {
+    try {
+        const response = await fetch(imageUrl);
+        if (response.ok) {
+            const blob = await response.blob();
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onload = function () {
+                const dataUrl = reader.result;
+                sessionStorage.setItem(titleKey, dataUrl);
+
+            }
+        } else {
+            console.log('Failed to load image from ' + imageUrl);
+        }
+    } catch (error) {
+        console.log('Failed to load image from ' + imageUrl + ': ' + error.message);
+
+    }
+}
+
+
+function makeProjectCard(userid, projectid, lastModified, sizemb, projectName) {
+    return `
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">${projectName}</h5>
+                    <div class="row no-gutters">
+                        <div class="col-6">
+                            <img src="/${userid}/${projectid}/Crop.png" class="card-img">
+                        </div>
+                        <div class="col-6">
+                            <img src="/${userid}/${projectid}/Paint.png" class="card-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body text-center d-flex flex-wrap justify-content-center">
+                    <div class="mr-1">
+                        <form onsubmit="handleProjectOpen(event,${projectid})">
+                            <button class="btn btn-success">Open<br />Project</button>
+                            <input type="hidden" value="${projectid}" id="directoryOfProject" name="directoryOfProject" />
+                        </form>
+                    </div>
+                    <div class="mr-1">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#renameModal" data-whatever="31bd8843-02ac-430c-a6bb-bece143e67a8" onclick="setRenameValues('${projectName}', '${projectid}');">Rename<br />Project</button>
+                    </div>
+                    <div>
+                        <form method="post" action="/Identity/Account/Manage/FileManager?handler=DeleteProject">
+                            <button class="btn btn-danger">Delete<br />Project</button>
+                            <input type="hidden" value="${projectid}" id="directoryOfProject" name="directoryOfProject" />
+                        </form>    
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div><small class="text-muted"><strong>Date Modified:</strong> ${lastModified}</small></div>
+                    <div><small class="text-muted"><strong>Size:</strong> ${sizemb} MB</small></div>
+                </div>
+            </div>
+`
+}
+    function setTitle() {
+        var colors = ["titleGreen", "titleRed", "titleOrange", "titleYellow", "titleWhite"];
+
+        var title = "CollegeCuber";
+        aLogo.innerHTML = "";
+
+        for (var i = 0; i < title.length; i++) {
+            var thisColor = Math.floor(Math.random() * 5);
+            var span = document.createElement("span");
+
+            span.innerText = title.charAt(i);
+            span.className = colors[thisColor];
+            aLogo.appendChild(span);
+        }
+
+    }
+    setInterval(setTitle, 500);
+</script>
